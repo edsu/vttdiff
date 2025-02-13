@@ -29,7 +29,13 @@ So you could run it like:
 You should be able to pip install vttdiff:
 
 ```shell
-pip3 install vttdiff
+$ pip3 install vttdiff
+```
+
+or just run it directly:
+
+```shell
+$ pipx run vttdiff
 ```
 
 ## Develop
