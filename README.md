@@ -25,4 +25,4 @@ So you could run it like:
 ```
 
 
-[this]: https://edsu.github.com/vttdiff/
+[this]: https://edsu.github.io/vttdiff/
