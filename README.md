@@ -24,5 +24,22 @@ So you could run it like:
 % vttdiff --output diff.html first.vtt second.vtt
 ```
 
+## Install
+
+You should be able to pip install vttdiff:
+
+```shell
+pip3 install vttdiff
+```
+
+## Develop
+
+*vttdiff* uses Python's [difflib] and is held together by duct tape and baling wire. If you have ideas for improving it please send a PR!
+
+```
+$ git clone git@github.com:edsu/vttdiff.git
+$ uv run pytest
+```
 
 [this]: https://edsu.github.io/vttdiff/
+[difflib]: https://docs.python.org/3/library/difflib.html
