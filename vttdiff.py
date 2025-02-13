@@ -17,7 +17,12 @@ def main():
     parser.add_argument(
         "--sentences", action="store_true", help="Reorient lines as sentences"
     )
-    parser.add_argument("--width", type=int, default=60, help="The default width (in characters) of each transcript in the diff")
+    parser.add_argument(
+        "--width",
+        type=int,
+        default=60,
+        help="The default width (in characters) of each transcript in the diff",
+    )
     args = parser.parse_args()
 
     if len(args.vtt) < 2:
@@ -32,7 +37,13 @@ def main():
         vtts.append(vtt.open().read())
         titles.append(vtt.name)
 
-    html = diff(*vtts, titles=titles, ignore_times=args.ignore_times, sentences=args.sentences, width=args.width)
+    html = diff(
+        *vtts,
+        titles=titles,
+        ignore_times=args.ignore_times,
+        sentences=args.sentences,
+        width=args.width,
+    )
 
     if args.output:
         Path(args.output).open("w").write(html)
@@ -41,7 +52,12 @@ def main():
 
 
 def diff(
-    base_vtt: str, *target_vtts: List[str], titles=[], ignore_times=False, sentences=False, width: int=60
+    base_vtt: str,
+    *target_vtts: List[str],
+    titles=[],
+    ignore_times=False,
+    sentences=False,
+    width: int = 60,
 ) -> str:
     """
     Pass in the text of two or more VTT files and get back a string containing the HTML diff.
@@ -61,7 +77,13 @@ def diff(
     for i, other_vtt in enumerate(target_vtts[1:]):
         html = add_diff(
             html,
-            diff(base_vtt, other_vtt, titles=['', titles[i+2]], ignore_times=ignore_times, sentences=sentences),
+            diff(
+                base_vtt,
+                other_vtt,
+                titles=["", titles[i + 2]],
+                ignore_times=ignore_times,
+                sentences=sentences,
+            ),
         )
 
     return html
@@ -95,7 +117,7 @@ def split_sentences(lines) -> List[str]:
     """
     Split lines with multiple sentences into multiple lines. So,
 
-        To be or not to be. That is the question. What's that a 
+        To be or not to be. That is the question. What's that a
         burrito?
 
     will become:
@@ -129,9 +151,13 @@ def add_diff(html1, html2):
     existing_rows = doc1.select("table tbody tr")
     new_rows = doc2.select("table tbody tr")
 
-    filename = doc2.body.table.thead.tr.select('th')[3].text
-    doc1.body.table.thead.tr.append(soup('<th class="diff_next"><br /></th>', 'html.parser'))
-    doc1.body.table.thead.tr.append(soup(f'<th class="diff_header" colspan="2">{filename}</th>', 'html.parser'))
+    filename = doc2.body.table.thead.tr.select("th")[3].text
+    doc1.body.table.thead.tr.append(
+        soup('<th class="diff_next"><br /></th>', "html.parser")
+    )
+    doc1.body.table.thead.tr.append(
+        soup(f'<th class="diff_header" colspan="2">{filename}</th>', "html.parser")
+    )
 
     for i, new_row in enumerate(new_rows):
         existing_rows[i].extend(new_row.select("td")[3:])
