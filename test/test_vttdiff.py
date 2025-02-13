@@ -19,12 +19,12 @@ def vtt3():
 
 
 def test_two(vtt1, vtt2):
-    html = vttdiff.diff(vtt1, vtt2)
+    html = vttdiff.diff(vtt1, vtt2, titles=["vtt1", "vtt2"])
     assert html
 
 
 def test_three(vtt1, vtt2, vtt3):
-    html = vttdiff.diff(vtt1, vtt2, vtt3)
+    html = vttdiff.diff(vtt1, vtt2, vtt3, titles=["vtt1", "vtt2", "vtt3"])
     assert html
 
 
