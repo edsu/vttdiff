@@ -15,10 +15,14 @@ options:
   --output OUTPUT  Write output to this file path
   --ignore-times   Ignore cue times in the diff
   --sentences      Reorient lines as sentences
-  --width WIDTH    The default width (in characters) of each transcript in the
-                   diff
+  --width WIDTH    The default width (in characters) of each transcript in the diff
 ```
 
+So you could run it like:
+
+```shell
+% vttdiff --output diff.html first.vtt second.vtt
+```
 
 
 [this]: https://edsu.github.com/vttdiff/
