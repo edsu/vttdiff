@@ -1,0 +1,33 @@
+[project]
+name = "vttdiff"
+version = "0.0.1"
+description = 'Create a HTML "diff" ebVTT files'
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "beautifulsoup4>=4.13.3",
+]
+
+[project.urls]
+homepage = "https://github.com/edsu/vttdiff"
+
+[project.scripts]
+vttdiff = "vttdiff:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.4",
+    "ruff>=0.9.6",
+]
+
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+log_cli = true
+log_cli_level = "INFO"
+pythonpath = [
+    "src"
+]
+
