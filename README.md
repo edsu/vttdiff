@@ -5,9 +5,7 @@
 This is a small utility for "diffing" two (or more) WebVTT files and generating an HTML file like [this]. It was designed for comparing a "ground truth" WebVTT file with WebVTT files that might have been created with different software or services.
  
 ```
-usage: vttdiff [-h] [--output OUTPUT] [--ignore-times] [--sentences]
-               [--width WIDTH]
-               vtt [vtt ...]
+usage: vttdiff [-h] [--output OUTPUT] [--ignore-times] [--sentences] [--width WIDTH] vtt [vtt ...]
 
 positional arguments:
   vtt              The path to two (or more) WebVTT files
