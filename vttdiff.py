@@ -53,7 +53,7 @@ def main():
 
 def diff(
     base_vtt: str,
-    *target_vtts: List[str],
+    *target_vtts,
     titles=[],
     ignore_times=False,
     sentences=False,

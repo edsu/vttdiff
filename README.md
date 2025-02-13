@@ -1,5 +1,7 @@
 # vttdiff
 
+[![Tests](https://github.com/edsu/vttdiff/actions/workflows/test.yml/badge.svg)](https://github.com/edsu/vttdiff/actions/workflows/test.yml)
+
 This is a small utility for "diffing" two (or more) WebVTT files and generating an HTML file like [this]. It was designed for comparing a "ground truth" WebVTT file with WebVTT files that might have been created with different software or services.
  
 ```
