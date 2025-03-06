@@ -9,11 +9,15 @@ jobs:
   publish-pypi:
     runs-on: ubuntu-latest
     steps:
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.12
 
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Build and push Docker image to production
+      - name: Publish to PyPI
         run: |
           pip install uv
           uv run build
