@@ -20,4 +20,5 @@ jobs:
       - name: Publish to PyPI
         run: |
           pip install uv
-          uv run build
+          uv build
+          uv publish
