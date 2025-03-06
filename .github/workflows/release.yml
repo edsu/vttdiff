@@ -8,14 +8,18 @@ on:
 jobs:
   publish-pypi:
     runs-on: ubuntu-latest
+
+    environment:
+      name: pypi
+      url: https://pypi.org/p/vttdiff
+
     steps:
+      - uses: actions/checkout@v3
+
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: 3.12
-
-      - name: Checkout
-        uses: actions/checkout@v3
 
       - name: Publish to PyPI
         run: |
