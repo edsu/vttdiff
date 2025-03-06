@@ -1,6 +1,6 @@
 [project]
 name = "vttdiff"
-version = "0.0.1"
+version = "0.0.2"
 description = 'Create a HTML "diff" ebVTT files'
 readme = "README.md"
 requires-python = ">=3.11"
