@@ -5,7 +5,7 @@
 This is a small utility for "diffing" two (or more) WebVTT files and generating an HTML file like [this]. It was designed for comparing a "ground truth" WebVTT file with WebVTT files that might have been created with different software or services.
  
 ```
-usage: vttdiff [-h] [--output OUTPUT] [--ignore-times] [--sentences] [--width WIDTH] vtt [vtt ...]
+usage: vttdiff [-h] [--output OUTPUT] [--include-times] [--width WIDTH] vtt [vtt ...]
 
 positional arguments:
   vtt              The path to two (or more) WebVTT files
@@ -13,8 +13,7 @@ positional arguments:
 options:
   -h, --help       show this help message and exit
   --output OUTPUT  Write output to this file path
-  --ignore-times   Ignore cue times in the diff
-  --sentences      Reorient lines as sentences
+  --compare-times  Include cue times in the diff
   --width WIDTH    The default width (in characters) of each transcript in the diff
 ```
 
