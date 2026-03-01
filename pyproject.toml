@@ -20,6 +20,7 @@ dev = [
     "mypy>=1.15.0",
     "pytest>=8.3.4",
     "ruff>=0.9.6",
+    "ty>=0.0.19",
 ]
 
 [build-system]
@@ -29,3 +30,4 @@ build-backend = "uv_build"
 [tool.pytest.ini_options]
 log_cli = true
 log_cli_level = "INFO"
+addopts = "--capture=no"

@@ -5,6 +5,7 @@ import string
 from pathlib import Path
 from typing import List
 
+import bs4
 import jiwer
 from bs4 import BeautifulSoup as soup
 
@@ -39,7 +40,6 @@ def main():
         width=args.width,
     )
 
-
     if args.output:
         Path(args.output).open("w").write(html)
     else:
@@ -48,8 +48,8 @@ def main():
 
 def diff(
     base_vtt: str,
-    *target_vtts,
-    titles=[],
+    *target_vtts: str,
+    titles: list[str]=[],
     width: int = 60,
 ) -> str:
     """
@@ -72,7 +72,7 @@ def diff(
                 titles=["", titles[i + 2]],
             ),
         )
-  
+
     html = add_stats(html, base_vtt, target_vtts, titles)
 
     return html
@@ -153,25 +153,26 @@ def add_diff(html1: str, html2: str) -> str:
     existing_rows = doc1.select("table tbody tr")
     new_rows = doc2.select("table tbody tr")
 
-    filename = doc2.body.table.thead.tr.select("th")[3].text
-    doc1.body.table.thead.tr.append(
-        soup('<th class="diff_next"><br /></th>', "html.parser")
-    )
-    doc1.body.table.thead.tr.append(
-        soup(f'<th class="diff_header" colspan="2">{filename}</th>', "html.parser")
-    )
+    filename = doc2.select("body table thead tr th")[3].text
+
+    tr = doc1.select("body table thead tr")
+    tr.append(soup('<th class="diff_next"><br /></th>', "html.parser"))
+    tr.append(soup(f'<th class="diff_header" colspan="2">{filename}</th>', "html.parser"))
 
     for i, new_row in enumerate(new_rows):
-        if i < len(existing_rows): 
+        if i < len(existing_rows):
             existing_rows[i].extend(new_row.select("td")[3:])
 
-    return doc1.prettify()
+    return str(doc1.prettify())
 
 
-def add_stats(html: str, base_vtt: list[str], target_vtts: list[list[str]], titles: list[str]) -> str:
+def add_stats(
+    html: str, base_vtt: str, target_vtts: tuple[str, ...], titles: list[str]
+) -> str:
     """
     Add comparison statistics to the supplied HTML document.
     """
+
     doc = soup(html, "html.parser")
     base_text = jiwer_text(lines(base_vtt))
     base_title = titles[0]
@@ -196,11 +197,15 @@ def add_stats(html: str, base_vtt: list[str], target_vtts: list[list[str]], titl
               <tr class="deletions"><tr><td>Deletions</td><td align="right">{stats.deletions}</td></tr>
             </table>
             """,
-            "html.parser"
+            "html.parser",
         )
-        doc.body.append(table)
 
-    return doc.prettify()
+        if doc.body:
+            doc.body.append(table)
+        else:
+            raise Exception("Unable to find body of HTML document!")
+
+    return str(doc.prettify())
 
 
 if __name__ == "__main__":
