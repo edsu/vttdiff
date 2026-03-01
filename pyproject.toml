@@ -17,7 +17,6 @@ vttdiff = "vttdiff:main"
 
 [dependency-groups]
 dev = [
-    "mypy>=1.15.0",
     "pytest>=8.3.4",
     "ruff>=0.9.6",
     "ty>=0.0.19",
