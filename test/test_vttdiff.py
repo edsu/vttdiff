@@ -20,12 +20,12 @@ def vtt3() -> str:
 
 
 def test_two(vtt1, vtt2) -> None:
-    html = vttdiff.diff(vtt1, vtt2, titles=["vtt1", "vtt2"])
+    html = vttdiff.diff([vtt1, vtt2], titles=["vtt1", "vtt2"])
     assert html
 
 
 def test_three(vtt1, vtt2, vtt3) -> None:
-    html = vttdiff.diff(vtt1, vtt2, vtt3, titles=["vtt1", "vtt2", "vtt3"])
+    html = vttdiff.diff([vtt1, vtt2, vtt3], titles=["vtt1", "vtt2", "vtt3"])
     assert html
 
 
@@ -39,7 +39,7 @@ def test_sentences() -> None:
 
 
 def test_stats_html(vtt1, vtt2) -> None:
-    html = vttdiff.diff(vtt1, vtt2, titles=["vtt1", "vtt2"])
+    html = vttdiff.diff([vtt1, vtt2], titles=["vtt1", "vtt2"])
     doc = soup(html, "html.parser")
 
     wer = doc.select(".stats .wer td")[1]

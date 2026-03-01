@@ -3,9 +3,7 @@ import difflib
 import re
 import string
 from pathlib import Path
-from typing import List
 
-import bs4
 import jiwer
 from bs4 import BeautifulSoup as soup
 
@@ -35,7 +33,7 @@ def main():
         titles.append(vtt.name)
 
     html = diff(
-        *vtts,
+        vtts,
         titles=titles,
         width=args.width,
     )
@@ -47,14 +45,17 @@ def main():
 
 
 def diff(
-    base_vtt: str,
-    *target_vtts: str,
+    vtts: list[str],
     titles: list[str]=[],
     width: int = 60,
 ) -> str:
     """
     Pass in the text of two or more VTT files and get back a string containing the HTML diff.
+    The first VTT is used as the reference, or source for the diffing.
     """
+    base_vtt = vtts[0]
+    target_vtts = vtts[1:]
+
     lines1 = lines(base_vtt)
     lines2 = lines(target_vtts[0])
 
@@ -66,19 +67,15 @@ def diff(
     for i, other_vtt in enumerate(target_vtts[1:]):
         html = add_diff(
             html,
-            diff(
-                base_vtt,
-                other_vtt,
-                titles=["", titles[i + 2]],
-            ),
+            diff([base_vtt, other_vtt], titles=["", titles[i + 2]]),
         )
 
-    html = add_stats(html, base_vtt, target_vtts, titles)
+    html = add_stats(html, vtts, titles)
 
     return html
 
 
-def lines(vtt: str) -> List[str]:
+def lines(vtt: str) -> list[str]:
     """
     Pass in WebVTT text and and return a list of just the text lines from the VTT file.
     """
@@ -102,7 +99,7 @@ def lines(vtt: str) -> List[str]:
 sentence_endings = re.compile(r"(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s")
 
 
-def split_sentences(lines: List[str]) -> List[str]:
+def split_sentences(lines: list[str]) -> list[str]:
     """
     Split lines with multiple sentences into multiple lines. So,
 
@@ -167,11 +164,14 @@ def add_diff(html1: str, html2: str) -> str:
 
 
 def add_stats(
-    html: str, base_vtt: str, target_vtts: tuple[str, ...], titles: list[str]
+    html: str, vtts: list[str], titles: list[str]
 ) -> str:
     """
     Add comparison statistics to the supplied HTML document.
     """
+
+    base_vtt = vtts[0]
+    target_vtts = vtts[1:]
 
     doc = soup(html, "html.parser")
     base_text = jiwer_text(lines(base_vtt))
